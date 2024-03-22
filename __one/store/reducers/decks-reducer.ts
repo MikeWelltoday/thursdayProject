@@ -15,7 +15,7 @@ export type DecksStateType = {
 
 //========================================================================================
 
-export type DecksReducerType = ReturnType<typeof setDecksAC>
+export type DecksReducerType = ReturnType<typeof setDecksAC> | ReturnType<typeof createDecksItem>
 
 //========================================================================================
 
@@ -33,6 +33,10 @@ export function decksReducer(state: DecksStateType = initialState, action: Decks
             return {...state, decks: [...action.payload.decksFromAPI]}
         }
 
+        case 'DECKS-CREATE-ITEM': {
+            return {...state, decks: [{...action.payload.newDeckFromAPI},...state.decks]}
+        }
+
         default:
             return state
     }
@@ -42,4 +46,8 @@ export function decksReducer(state: DecksStateType = initialState, action: Decks
 
 export function setDecksAC(decksFromAPI: DeckItemType[]) {
     return {type: 'DECKS-SET', payload: {decksFromAPI}} as const
+}
+
+export function createDecksItem(newDeckFromAPI: DeckItemType) {
+    return {type: 'DECKS-CREATE-ITEM', payload: {newDeckFromAPI}} as const
 }

@@ -1,19 +1,29 @@
 import s from './AddNewPostForm.module.css'
 import {useForm} from 'react-hook-form'
 import {FC} from 'react'
+import {createDecksItemTC, useAppDispatch} from '../../../store'
+
+//========================================================================================
 
 type FormValues = {
     name: string
 }
 
-type AddNewDeckFormPropsType = {}
+// type AddNewDeckFormPropsType = {
+//
+// }
 
-export const AddNewDeckForm: FC<AddNewDeckFormPropsType> = (props) => {
+//========================================================================================
 
-    const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({defaultValues: {name: ''}})
+export const AddNewDeckForm: FC = (props) => {
+
+    const dispatch = useAppDispatch()
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<FormValues>({defaultValues: {name: ''}})
 
     const onSubmit = (data: FormValues) => {
-        console.log(data)
+        dispatch(createDecksItemTC(data.name))
+            .then(() => reset())
+
     }
 
     return (

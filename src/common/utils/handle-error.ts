@@ -6,7 +6,7 @@ type ServerErrorType = {
     errorMessages: { field: string, message: string }[]
 }
 
-export function errorHandler(error: any, dispatch: Dispatch) {
+export function errorHandler(error: unknown, dispatch: Dispatch) {
     let errorMessage: string
     if (isAxiosError<ServerErrorType>(error)) {
         errorMessage = error.response ? error.response.data.errorMessages[0].message : error.message
@@ -15,3 +15,6 @@ export function errorHandler(error: any, dispatch: Dispatch) {
     }
     dispatch(appSetError(errorMessage))
 }
+
+
+
